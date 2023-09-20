@@ -30,15 +30,14 @@ router.post('/', validateUser, (req, res, next) => {
     .catch(next)
 });
 
-router.put('/:id', validateUserId, validateUser, (req, res, next) => {
-  User.update(req.params.id, { name: req.name })
-    .then(() => {
-      return User.getById(req.params.id)
-    })
-    .then(user => {
-      res.json(user)
-    })
-    .cathc(next)
+router.put('/:id', validateUserId, validateUser, async (req, res, next) => {
+  try {
+    const result = await User.update(req.params.id, { name: req.name })
+    console.log(req.params.id, req.name)
+    res.json(result)
+  } catch (err) {
+    next(err)
+  }
 });
 
 router.delete('/:id', validateUserId, async (req, res, next) => {
