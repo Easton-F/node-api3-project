@@ -43,8 +43,8 @@ router.put('/:id', validateUserId, validateUser, (req, res, next) => {
 
 router.delete('/:id', validateUserId, async (req, res, next) => {
   try {
-    const result = await User.remove(req.params.id)
-    res.json(result)
+    await User.remove(req.params.id)
+    res.json(req.user)
   } catch (err) {
     next(err)
   }
